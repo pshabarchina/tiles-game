@@ -1,23 +1,48 @@
-import logo from './logo.svg';
 import './App.css';
+import Tile from "./components/Tile";
+
 
 function App() {
+  const pictures = [
+    {'url': "https://cdn2.thecatapi.com/images/b39.jpg"},
+    {'url': "https://cdn2.thecatapi.com/images/JFPROfGtQ.jpg"},
+    {'url': 'https://cdn2.thecatapi.com/images/MTU1Njg0MQ.jpg'},
+    {'url': 'https://cdn2.thecatapi.com/images/e9e.jpg'},
+    {'url': 'https://cdn2.thecatapi.com/images/bai.jpg'},
+    {'url': 'https://cdn2.thecatapi.com/images/12l.jpg'},
+    {'url': "https://cdn2.thecatapi.com/images/b39.jpg"},
+    {'url': "https://cdn2.thecatapi.com/images/JFPROfGtQ.jpg"},
+    {'url': 'https://cdn2.thecatapi.com/images/MTU1Njg0MQ.jpg'},
+    {'url': 'https://cdn2.thecatapi.com/images/e9e.jpg'},
+    {'url': 'https://cdn2.thecatapi.com/images/bai.jpg'},
+    {'url': 'https://cdn2.thecatapi.com/images/12l.jpg'},
+  ];
+
+  function openTile(e){
+    alert('tile is opened!');
+  }
+
+  let tilesRow1 = [];
+  let tilesRow2 = [];
+  let tilesRow3 = [];
+
+  for (let i = 0; i < 4; i++) {
+    tilesRow1.push((<span><Tile image={pictures[i].url} openTile={openTile}></Tile></span>))
+  }
+
+  for (let i = 4; i < 8; i++) {
+    tilesRow2.push((<span><Tile image={pictures[i].url} openTile={openTile}></Tile></span>))
+  }
+
+  for (let i = 8; i < 12; i++) {
+    tilesRow3.push((<span><Tile image={pictures[i].url} openTile={openTile}></Tile></span>))
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div className="board-row">{tilesRow1}</div>
+      <div className="board-row">{tilesRow2}</div>
+      <div className="board-row">{tilesRow3}</div>
     </div>
   );
 }
