@@ -23,6 +23,7 @@ function App() {
   let secondTileIsOpened = false;
   let firstTileId = '';
   let secondTileId = '';
+  let numberOfFoundPairs = 0;
 
   function openTile(e){
     alert('tile is opened!');
@@ -39,7 +40,8 @@ function App() {
       console.log(secondTileId);
       if (firstTileId === secondTileId) {
         alert('yes!')
-        //exclude tiles from game
+        numberOfFoundPairs ++;
+        //exclude tiles from game - tiles should not be clickable I guess...
       }
       else {
         alert ('no :(((')
@@ -49,6 +51,12 @@ function App() {
       secondTileIsOpened = false;
       firstTileId = '';
       secondTileId = '';
+
+      if (numberOfFoundPairs === 6) {
+        alert('you are the winner!');
+        //reset game
+        numberOfFoundPairs = 0;
+      }
     }
   }
 
