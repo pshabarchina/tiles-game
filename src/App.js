@@ -30,7 +30,7 @@ function App() {
   
   useEffect(() => {
     shuffle(shuffledPictures);
-  }, [])
+  }, []);
 
   function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -40,19 +40,21 @@ function App() {
   }
 
   function openTile(e){
-    if (openedTiles.includes(e.target.id)) return;
+    if (openedTiles.includes(e.target.src)) return;
 
     alert('tile is opened!');
-    
+
 
     if (!firstTileIsOpened) {
       firstTileIsOpened = true;
-      firstTileId = e.target.id;
+      firstTileId = e.target.src;
+      console.log(firstTileId);
     }
     else {
       //check index so the same tile is not clicked!
       secondTileIsOpened = true;
-      secondTileId = e.target.id;
+      secondTileId = e.target.src;
+      console.log(secondTileId);
 
       if (firstTileId === secondTileId) {
         alert('yes!')
@@ -77,7 +79,7 @@ function App() {
   } 
 
   function createTile(i){
-    return (<span key={nanoid()}><Tile openedTiles={openedTiles} id={shuffledPictures[i].url} openTile={openTile}></Tile></span>)
+    return (<span key={nanoid()}><Tile openedTiles={openedTiles} id={i} shuffledPictures={shuffledPictures} openTile={openTile}></Tile></span>)
   }
 
   return (

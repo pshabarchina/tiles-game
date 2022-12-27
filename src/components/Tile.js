@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function Tile(props) {
-    return (<img className="tile" onClick={props.openTile} src={props.openedTiles.includes(props.id) ? null : props.id} id={props.id}/>);
+    return (<img className="tile" onClick={props.openTile} src={props.openedTiles.includes(props.shuffledPictures[props.id].url) ? null : props.shuffledPictures[props.id].url} id={props.id}/>);
 };
