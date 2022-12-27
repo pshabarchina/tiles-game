@@ -1,7 +1,7 @@
 import './App.css';
 import Tile from "./components/Tile";
 import { nanoid } from 'nanoid';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
   const pictures = [
@@ -25,7 +25,12 @@ function App() {
   let secondTileIsOpened = false;
   let firstTileId = '';
   let secondTileId = '';
+
+  const shuffledPictures = pictures;
   
+  useEffect(() => {
+    shuffle(shuffledPictures);
+  }, [])
 
   function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -38,6 +43,8 @@ function App() {
     if (openedTiles.includes(e.target.id)) return;
 
     alert('tile is opened!');
+    
+
     if (!firstTileIsOpened) {
       firstTileIsOpened = true;
       firstTileId = e.target.id;
@@ -49,9 +56,7 @@ function App() {
 
       if (firstTileId === secondTileId) {
         alert('yes!')
-        let openedTilesCopy = openedTiles;
-        openedTilesCopy.push(firstTileId);
-        setOpenedTiles(openedTilesCopy);
+        setOpenedTiles([...openedTiles, firstTileId]);
         console.log(openedTiles);
       }
       else {
@@ -64,18 +69,15 @@ function App() {
       secondTileId = '';
 
       if (openedTiles.length === 6) {
-        alert('you are the winner!');
+        alert('you are the winner!');// not going here at all...
         setOpenedTiles([]);
         console.log(openedTiles);
       }
     }
   } 
-  
-  const shuffledPictures = pictures;
-  shuffle(shuffledPictures);
 
   function createTile(i){
-    return (<span key={nanoid()}><Tile image={openedTiles.includes(shuffledPictures[i].url)? null : shuffledPictures[i].url} id={shuffledPictures[i].url} openTile={openTile}></Tile></span>)
+    return (<span key={nanoid()}><Tile openedTiles={openedTiles} id={shuffledPictures[i].url} openTile={openTile}></Tile></span>)
   }
 
   return (
