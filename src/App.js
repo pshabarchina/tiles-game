@@ -1,7 +1,7 @@
 import './App.css';
 import Tile from "./components/Tile";
 import { nanoid } from 'nanoid';
-
+import { useState } from 'react';
 
 function App() {
   const pictures = [
@@ -19,29 +19,40 @@ function App() {
     {'url': 'https://cdn2.thecatapi.com/images/12l.jpg'},
   ];
 
+  const [openedTiles, setOpenedTiles] = useState([]);
+
   let firstTileIsOpened = false;
   let secondTileIsOpened = false;
   let firstTileId = '';
   let secondTileId = '';
-  let numberOfFoundPairs = 0;
+  
+
+  function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
 
   function openTile(e){
+    if (openedTiles.includes(e.target.id)) return;
+
     alert('tile is opened!');
     if (!firstTileIsOpened) {
       firstTileIsOpened = true;
       firstTileId = e.target.id;
-      
-      console.log(firstTileId);
     }
     else {
+      //check index so the same tile is not clicked!
       secondTileIsOpened = true;
       secondTileId = e.target.id;
 
-      console.log(secondTileId);
       if (firstTileId === secondTileId) {
         alert('yes!')
-        numberOfFoundPairs ++;
-        //exclude tiles from game - tiles should not be clickable I guess...
+        let openedTilesCopy = openedTiles;
+        openedTilesCopy.push(firstTileId);
+        setOpenedTiles(openedTilesCopy);
+        console.log(openedTiles);
       }
       else {
         alert ('no :(((')
@@ -52,35 +63,26 @@ function App() {
       firstTileId = '';
       secondTileId = '';
 
-      if (numberOfFoundPairs === 6) {
+      if (openedTiles.length === 6) {
         alert('you are the winner!');
-        //reset game
-        numberOfFoundPairs = 0;
+        setOpenedTiles([]);
+        console.log(openedTiles);
       }
     }
-  }
+  } 
+  
+  const shuffledPictures = pictures;
+  shuffle(shuffledPictures);
 
-  let tilesRow1 = [];
-  let tilesRow2 = [];
-  let tilesRow3 = [];
-
-  for (let i = 0; i < 4; i++) {
-    tilesRow1.push((<span key={nanoid()}><Tile image={pictures[i].url} id={pictures[i].url} openTile={openTile}></Tile></span>))
-  }
-
-  for (let i = 4; i < 8; i++) {
-    tilesRow2.push((<span key={nanoid()}><Tile image={pictures[i].url} id={pictures[i].url} openTile={openTile}></Tile></span>))
-  }
-
-  for (let i = 8; i < 12; i++) {
-    tilesRow3.push((<span key={nanoid()}><Tile image={pictures[i].url} id={pictures[i].url} openTile={openTile}></Tile></span>))
+  function createTile(i){
+    return (<span key={nanoid()}><Tile image={openedTiles.includes(shuffledPictures[i].url)? null : shuffledPictures[i].url} id={shuffledPictures[i].url} openTile={openTile}></Tile></span>)
   }
 
   return (
     <div>
-      <div className="board-row">{tilesRow1}</div>
-      <div className="board-row">{tilesRow2}</div>
-      <div className="board-row">{tilesRow3}</div>
+      <div className="board-row">{createTile(0)}{createTile(1)}{createTile(2)}{createTile(3)}</div>
+      <div className="board-row">{createTile(4)}{createTile(5)}{createTile(6)}{createTile(7)}</div>
+      <div className="board-row">{createTile(8)}{createTile(9)}{createTile(10)}{createTile(11)}</div>
     </div>
   );
 }
