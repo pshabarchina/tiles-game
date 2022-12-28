@@ -24,6 +24,7 @@ function App() {
   const [displayedShuffledPictures, setDisplayedShuffledPictures] = useState(pictures);
   const [openedTiles, setOpenedTiles] = useState([]);
   const [firstTileIsOpened, setFirstTileIsOpened] = useState(false);
+  const [firstTileId, setFirstTileId] = useState('');
   const [firstTileUrl, setFirstTileUrl] = useState('');
 
   useEffect(() => {
@@ -39,7 +40,6 @@ function App() {
     }
   }
 
-    let firstTileId = '';
     let secondTileId = '';
     let secondTileUrl = '';
   
@@ -52,9 +52,9 @@ function App() {
 
     if (!firstTileIsOpened) {
       setFirstTileIsOpened(true);
-      firstTileId = e.target.id;
+      setFirstTileId(e.target.id);
       setFirstTileUrl(e.target.alt)
-      setOpenedTiles([...openedTiles, firstTileId]);
+      setOpenedTiles([...openedTiles, e.target.id]);
       console.log(firstTileId);
       console.log(firstTileUrl);
     }
@@ -72,13 +72,20 @@ function App() {
       }
       else {
         alert ('no :(((');
+        console.log(firstTileId);
         //filtering is not correct - bug
-        //const newOpenedTiles = openedTiles.filter(element => element !== firstTileId).filter(element => element !== secondTileId);
-        setOpenedTiles([]);
+        let newOpenedTiles = [];
+        for(let i = 0; i < openedTiles.length; i++) {
+          if (openedTiles[i] !== firstTileId && openedTiles[i] !== secondTileId) {
+            newOpenedTiles.push(openedTiles[i]);
+          }
+        }
+        console.log(newOpenedTiles);
+        setOpenedTiles(newOpenedTiles);
       }
 
       setFirstTileIsOpened(false);
-      firstTileId = '';
+      setFirstTileId('');
       setFirstTileUrl('');
       secondTileId = '';
       secondTileUrl = '';
