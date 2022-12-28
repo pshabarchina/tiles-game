@@ -5,31 +5,31 @@ import { useEffect, useState } from 'react';
 
 function App() {
   const pictures = [
-    {'url': "https://cdn2.thecatapi.com/images/b39.jpg"},
-    {'url': "https://cdn2.thecatapi.com/images/JFPROfGtQ.jpg"},
-    {'url': 'https://cdn2.thecatapi.com/images/MTU1Njg0MQ.jpg'},
-    {'url': 'https://cdn2.thecatapi.com/images/e9e.jpg'},
-    {'url': 'https://cdn2.thecatapi.com/images/bai.jpg'},
-    {'url': 'https://cdn2.thecatapi.com/images/12l.jpg'},
-    {'url': "https://cdn2.thecatapi.com/images/b39.jpg"},
-    {'url': "https://cdn2.thecatapi.com/images/JFPROfGtQ.jpg"},
-    {'url': 'https://cdn2.thecatapi.com/images/MTU1Njg0MQ.jpg'},
-    {'url': 'https://cdn2.thecatapi.com/images/e9e.jpg'},
-    {'url': 'https://cdn2.thecatapi.com/images/bai.jpg'},
-    {'url': 'https://cdn2.thecatapi.com/images/12l.jpg'},
+    {url: 'https://cdn2.thecatapi.com/images/b39.jpg', isOpened: false, id: '0'},
+    {url: 'https://cdn2.thecatapi.com/images/JFPROfGtQ.jpg', isOpened: false, id: '1'},
+    {url: 'https://cdn2.thecatapi.com/images/MTU1Njg0MQ.jpg', isOpened: false, id: '2'},
+    {url: 'https://cdn2.thecatapi.com/images/e9e.jpg', isOpened: false, id: '3'},
+    {url: 'https://cdn2.thecatapi.com/images/bai.jpg', isOpened: false, id: '4'},
+    {url: 'https://cdn2.thecatapi.com/images/12l.jpg', isOpened: false, id: '5'},
+    {url: "https://cdn2.thecatapi.com/images/b39.jpg", isOpened: false, id: '6'},
+    {url: "https://cdn2.thecatapi.com/images/JFPROfGtQ.jpg", isOpened: false, id: '7'},
+    {url: 'https://cdn2.thecatapi.com/images/MTU1Njg0MQ.jpg', isOpened: false, id: '8'},
+    {url: 'https://cdn2.thecatapi.com/images/e9e.jpg', isOpened: false, id: '9'},
+    {url: 'https://cdn2.thecatapi.com/images/bai.jpg', isOpened: false, id: '10'},
+    {url: 'https://cdn2.thecatapi.com/images/12l.jpg', isOpened: false, id: '11'},
   ];
 
-  const [openedTiles, setOpenedTiles] = useState([]);
-
-  let firstTileIsOpened = false;
-  let secondTileIsOpened = false;
-  let firstTileId = '';
-  let secondTileId = '';
-
   const shuffledPictures = pictures;
-  
+
+  const [displayedShuffledPictures, setDisplayedShuffledPictures] = useState(pictures);
+  const [openedTiles, setOpenedTiles] = useState([]);
+  const [firstTileIsOpened, setFirstTileIsOpened] = useState(false);
+  const [firstTileUrl, setFirstTileUrl] = useState('');
+
   useEffect(() => {
-    shuffle(shuffledPictures);
+    shuffle(shuffledPictures)
+    setDisplayedShuffledPictures(shuffledPictures);
+    console.log(displayedShuffledPictures);
   }, []);
 
   function shuffle(array) {
@@ -39,47 +39,58 @@ function App() {
     }
   }
 
-  function openTile(e){
-    if (openedTiles.includes(e.target.src)) return;
+    let firstTileId = '';
+    let secondTileId = '';
+    let secondTileUrl = '';
+  
+    function openTile(e){
+    if (openedTiles.includes(e.target.id)) return;
+    console.log(openedTiles);
 
     alert('tile is opened!');
 
 
     if (!firstTileIsOpened) {
-      firstTileIsOpened = true;
-      firstTileId = e.target.src;
+      setFirstTileIsOpened(true);
+      firstTileId = e.target.id;
+      setFirstTileUrl(e.target.alt)
+      setOpenedTiles([...openedTiles, firstTileId]);
       console.log(firstTileId);
+      console.log(firstTileUrl);
     }
     else {
-      //check index so the same tile is not clicked!
-      secondTileIsOpened = true;
-      secondTileId = e.target.src;
+      alert('opening second tile!');
+      secondTileId = e.target.id;
+      setOpenedTiles([...openedTiles, secondTileId]);
+      secondTileUrl = e.target.alt;
       console.log(secondTileId);
+      console.log(secondTileUrl);
+      console.log(firstTileUrl);
 
-      if (firstTileId === secondTileId) {
-        alert('yes!')
-        setOpenedTiles([...openedTiles, firstTileId]);
-        console.log(openedTiles);
+      if (firstTileUrl === secondTileUrl) {
+        alert('yes!');
       }
       else {
-        alert ('no :(((')
+        alert ('no :(((');
+        //filtering is not correct - bug
+        //const newOpenedTiles = openedTiles.filter(element => element !== firstTileId).filter(element => element !== secondTileId);
+        setOpenedTiles([]);
       }
 
-      firstTileIsOpened = false;
-      secondTileIsOpened = false;
+      setFirstTileIsOpened(false);
       firstTileId = '';
+      setFirstTileUrl('');
       secondTileId = '';
+      secondTileUrl = '';
 
       if (openedTiles.length === 6) {
         alert('you are the winner!');// not going here at all...
-        setOpenedTiles([]);
-        console.log(openedTiles);
       }
     }
   } 
 
   function createTile(i){
-    return (<span key={nanoid()}><Tile openedTiles={openedTiles} id={i} shuffledPictures={shuffledPictures} openTile={openTile}></Tile></span>)
+    return (<span key={nanoid()}><Tile openedTiles={openedTiles} displayedShuffledPictures={pictures} openTile={openTile} id={i}></Tile></span>)
   }
 
   return (
