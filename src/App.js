@@ -1,7 +1,7 @@
 import './App.css';
 import Tile from "./components/Tile";
 import { nanoid } from 'nanoid';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 function App() {
   const pictures = [
