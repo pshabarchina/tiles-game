@@ -23,12 +23,10 @@ function App() {
 
   const [displayedShuffledPictures, setDisplayedShuffledPictures] = useState(pictures);
   const [openedTiles, setOpenedTiles] = useState([]);
-  const [firstTileIsOpened, setFirstTileIsOpened] = useState(false);
   const [firstTileId, setFirstTileId] = useState('');
   const [firstTileUrl, setFirstTileUrl] = useState('');
   const [secondTileId, setSecondTileId] = useState('');
   const [secondTileUrl, setSecondTileUrl] = useState('');
-  const [isMatchingInProgress, setIsMatchingInProgress] = useState(false);
 
 
   // useEffect(() => {
@@ -46,16 +44,14 @@ function App() {
 
   function openTile(e){ 
     if (openedTiles.includes(e.target.id)) return;
-    if (isMatchingInProgress) return;
+    if (firstTileId && secondTileId) return;
 
-    if (!firstTileIsOpened) {
-      setFirstTileIsOpened(true);
+    if (!firstTileId) {
       setFirstTileId(e.target.id);
       setFirstTileUrl(e.target.closest('span').id)
       setOpenedTiles([...openedTiles, e.target.id]);
     }
     else {
-      setIsMatchingInProgress(true);
       setSecondTileId(e.target.id);
       setOpenedTiles([...openedTiles, e.target.id]);
       setSecondTileUrl(e.target.closest('span').id);
@@ -78,12 +74,10 @@ function App() {
   }
 
   function resetTiles() {
-    setFirstTileIsOpened(false);
     setFirstTileId('');
     setFirstTileUrl('');
     setSecondTileId('');
     setSecondTileUrl('');
-    setIsMatchingInProgress(false);
   }
 
 
