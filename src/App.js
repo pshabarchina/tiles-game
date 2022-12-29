@@ -19,30 +19,23 @@ function App() {
     {url: 'https://cdn2.thecatapi.com/images/12l.jpg', isOpened: false, id: '11'},
   ];
 
-  const shuffledPictures = pictures;
-
-  const [displayedShuffledPictures, setDisplayedShuffledPictures] = useState(pictures);
+  const [displayedShuffledPictures, setDisplayedShuffledPictures] = useState(shuffle(pictures));
   const [openedTiles, setOpenedTiles] = useState([]);
   const [firstTileId, setFirstTileId] = useState('');
   const [firstTileUrl, setFirstTileUrl] = useState('');
   const [secondTileId, setSecondTileId] = useState('');
   const [secondTileUrl, setSecondTileUrl] = useState('');
 
-
-  // useEffect(() => {
-  //   shuffle(shuffledPictures)
-  //   setDisplayedShuffledPictures(shuffledPictures);
-  //   console.log(displayedShuffledPictures);
-  // }, []);
-
   function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
       let j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
     }
+    return array;
   }
 
-  function openTile(e){ 
+  function openTile(e){
+    console.log(e.target.id); 
     if (openedTiles.includes(e.target.id)) return;
     if (firstTileId && secondTileId) return;
 
@@ -63,7 +56,7 @@ function App() {
   } 
 
   function createTile(i){
-    return (<span key={nanoid()}><Tile openedTiles={openedTiles} displayedShuffledPictures={pictures} openTile={openTile} id={i}></Tile></span>)
+    return (<span key={nanoid()}><Tile openedTiles={openedTiles} displayedShuffledPictures={displayedShuffledPictures} openTile={openTile} id={i}></Tile></span>)
   }
 
   function checkTilesMatch(firstTileUrl, secondTileUrl, firstTileId, secondTileId) {
