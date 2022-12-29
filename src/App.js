@@ -26,6 +26,10 @@ function App() {
   const [firstTileIsOpened, setFirstTileIsOpened] = useState(false);
   const [firstTileId, setFirstTileId] = useState('');
   const [firstTileUrl, setFirstTileUrl] = useState('');
+  const [secondTileId, setSecondTileId] = useState('');
+  const [secondTileUrl, setSecondTileUrl] = useState('');
+  const [isMatchingInProgress, setIsMatchingInProgress] = useState(false);
+
 
   // useEffect(() => {
   //   shuffle(shuffledPictures)
@@ -40,11 +44,9 @@ function App() {
     }
   }
 
-  let secondTileId = '';
-  let secondTileUrl = '';
-
   function openTile(e){ 
     if (openedTiles.includes(e.target.id)) return;
+    if (isMatchingInProgress) return;
 
     if (!firstTileIsOpened) {
       setFirstTileIsOpened(true);
@@ -53,16 +55,14 @@ function App() {
       setOpenedTiles([...openedTiles, e.target.id]);
     }
     else {
-      secondTileId = e.target.id;
-      setOpenedTiles([...openedTiles, secondTileId]);
-      secondTileUrl = e.target.closest('span').id;
+      setIsMatchingInProgress(true);
+      setSecondTileId(e.target.id);
+      setOpenedTiles([...openedTiles, e.target.id]);
+      setSecondTileUrl(e.target.closest('span').id);
 
-      console.log(firstTileUrl);
-      console.log(secondTileUrl);
+      setTimeout(checkTilesMatch, 1500, firstTileUrl, e.target.closest('span').id, firstTileId, e.target.id);
 
-      setTimeout(checkTilesMatch, 1500, firstTileUrl, secondTileUrl, secondTileId);
-
-      setTimeout(resetTiles, 1501, secondTileId, secondTileUrl);
+      setTimeout(resetTiles, 1501);
     }
   } 
 
@@ -70,19 +70,20 @@ function App() {
     return (<span key={nanoid()}><Tile openedTiles={openedTiles} displayedShuffledPictures={pictures} openTile={openTile} id={i}></Tile></span>)
   }
 
-  function checkTilesMatch(firstTileUrl, secondTileUrl, secondTileId) {
+  function checkTilesMatch(firstTileUrl, secondTileUrl, firstTileId, secondTileId) {
     if (firstTileUrl !== secondTileUrl) {
       const newOpenedTiles = openedTiles.filter(el => (el !== firstTileId && el !== secondTileId))
       setOpenedTiles(newOpenedTiles);
     }
   }
 
-  function resetTiles(secondTileId, secondTileUrl) {
+  function resetTiles() {
     setFirstTileIsOpened(false);
     setFirstTileId('');
     setFirstTileUrl('');
-    secondTileId = '';
-    secondTileUrl = '';
+    setSecondTileId('');
+    setSecondTileUrl('');
+    setIsMatchingInProgress(false);
   }
 
 
