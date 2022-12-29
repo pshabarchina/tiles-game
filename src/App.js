@@ -40,47 +40,38 @@ function App() {
     }
   }
 
-    let secondTileId = '';
-    let secondTileUrl = '';
-  
-    function openTile(e){
+  let secondTileId = '';
+  let secondTileUrl = '';
+
+  function openTile(e){ 
     if (openedTiles.includes(e.target.id)) return;
-    console.log(openedTiles);
 
     alert('tile is opened!');
-
 
     if (!firstTileIsOpened) {
       setFirstTileIsOpened(true);
       setFirstTileId(e.target.id);
-      setFirstTileUrl(e.target.alt)
+      setFirstTileUrl(e.target.closest('span').id)
       setOpenedTiles([...openedTiles, e.target.id]);
-      console.log(firstTileId);
-      console.log(firstTileUrl);
     }
     else {
       alert('opening second tile!');
       secondTileId = e.target.id;
       setOpenedTiles([...openedTiles, secondTileId]);
-      secondTileUrl = e.target.alt;
-      console.log(secondTileId);
-      console.log(secondTileUrl);
-      console.log(firstTileUrl);
+      secondTileUrl = e.target.closest('span').id;
 
       if (firstTileUrl === secondTileUrl) {
         alert('yes!');
+        //can delete this if cause in this case we should do nothin at all
       }
       else {
         alert ('no :(((');
-        console.log(firstTileId);
-        //filtering is not correct - bug
         let newOpenedTiles = [];
         for(let i = 0; i < openedTiles.length; i++) {
           if (openedTiles[i] !== firstTileId && openedTiles[i] !== secondTileId) {
             newOpenedTiles.push(openedTiles[i]);
           }
         }
-        console.log(newOpenedTiles);
         setOpenedTiles(newOpenedTiles);
       }
 
