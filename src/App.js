@@ -27,11 +27,11 @@ function App() {
   const [firstTileId, setFirstTileId] = useState('');
   const [firstTileUrl, setFirstTileUrl] = useState('');
 
-  useEffect(() => {
-    shuffle(shuffledPictures)
-    setDisplayedShuffledPictures(shuffledPictures);
-    console.log(displayedShuffledPictures);
-  }, []);
+  // useEffect(() => {
+  //   shuffle(shuffledPictures)
+  //   setDisplayedShuffledPictures(shuffledPictures);
+  //   console.log(displayedShuffledPictures);
+  // }, []);
 
   function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -46,8 +46,6 @@ function App() {
   function openTile(e){ 
     if (openedTiles.includes(e.target.id)) return;
 
-    alert('tile is opened!');
-
     if (!firstTileIsOpened) {
       setFirstTileIsOpened(true);
       setFirstTileId(e.target.id);
@@ -55,41 +53,38 @@ function App() {
       setOpenedTiles([...openedTiles, e.target.id]);
     }
     else {
-      alert('opening second tile!');
       secondTileId = e.target.id;
       setOpenedTiles([...openedTiles, secondTileId]);
       secondTileUrl = e.target.closest('span').id;
 
-      if (firstTileUrl === secondTileUrl) {
-        alert('yes!');
-        //can delete this if cause in this case we should do nothin at all
-      }
-      else {
-        alert ('no :(((');
-        let newOpenedTiles = [];
-        for(let i = 0; i < openedTiles.length; i++) {
-          if (openedTiles[i] !== firstTileId && openedTiles[i] !== secondTileId) {
-            newOpenedTiles.push(openedTiles[i]);
-          }
-        }
-        setOpenedTiles(newOpenedTiles);
-      }
+      console.log(firstTileUrl);
+      console.log(secondTileUrl);
 
-      setFirstTileIsOpened(false);
-      setFirstTileId('');
-      setFirstTileUrl('');
-      secondTileId = '';
-      secondTileUrl = '';
+      setTimeout(checkTilesMatch, 1500, firstTileUrl, secondTileUrl, secondTileId);
 
-      if (openedTiles.length === 6) {
-        alert('you are the winner!');// not going here at all...
-      }
+      setTimeout(resetTiles, 1501, secondTileId, secondTileUrl);
     }
   } 
 
   function createTile(i){
     return (<span key={nanoid()}><Tile openedTiles={openedTiles} displayedShuffledPictures={pictures} openTile={openTile} id={i}></Tile></span>)
   }
+
+  function checkTilesMatch(firstTileUrl, secondTileUrl, secondTileId) {
+    if (firstTileUrl !== secondTileUrl) {
+      const newOpenedTiles = openedTiles.filter(el => (el !== firstTileId && el !== secondTileId))
+      setOpenedTiles(newOpenedTiles);
+    }
+  }
+
+  function resetTiles(secondTileId, secondTileUrl) {
+    setFirstTileIsOpened(false);
+    setFirstTileId('');
+    setFirstTileUrl('');
+    secondTileId = '';
+    secondTileUrl = '';
+  }
+
 
   return (
     <div>
