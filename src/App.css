@@ -1,6 +1,6 @@
 .tile {
   background: rgb(193, 245, 117);
-  border: 1px solid rgb(123, 122, 122);
+  border: 1px solid rgb(103, 129, 63);
   border-radius: 6%;
   border-style: dashed;
   float: left;
@@ -9,18 +9,15 @@
   margin-top: -1px;
   padding: 0;
   width: 200px;
+  transition: background-color 0.6s;
 }
 
 .tile:hover {
-  opacity: 0.8;
+  background: rgb(155, 196, 94);
 }
 
 .board-row:after {
   clear: both;
   content: "";
   display: table;
-}
-
-.container {
-  transition: opacity 1s;
 }
