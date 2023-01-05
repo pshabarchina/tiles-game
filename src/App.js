@@ -49,9 +49,9 @@ function App() {
       setOpenedTiles([...openedTiles, e.target.id]);
       setSecondTileUrl(e.target.closest('span').id);
 
-      setTimeout(checkTilesMatch, 1500, firstTileUrl, e.target.closest('span').id, firstTileId, e.target.id);
+      setTimeout(checkTilesMatch, 1000, firstTileUrl, e.target.closest('span').id, firstTileId, e.target.id);
 
-      setTimeout(resetTiles, 1501);
+      setTimeout(resetTiles, 1001);
     }
   } 
 
@@ -75,7 +75,7 @@ function App() {
 
 
   return (
-    <div>
+    <div className="container">
       <div className="board-row">{createTile(0)}{createTile(1)}{createTile(2)}{createTile(3)}</div>
       <div className="board-row">{createTile(4)}{createTile(5)}{createTile(6)}{createTile(7)}</div>
       <div className="board-row">{createTile(8)}{createTile(9)}{createTile(10)}{createTile(11)}</div>

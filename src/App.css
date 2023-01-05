@@ -1,16 +1,18 @@
 .tile {
-  background: greenyellow;
-  border: 1px solid #999;
+  background: rgb(193, 245, 117);
+  border: 1px solid rgb(123, 122, 122);
+  border-radius: 6%;
+  border-style: dashed;
   float: left;
-  font-size: 24px;
-  font-weight: bold;
-  line-height: 200px;
   height: 200px;
   margin-right: -1px;
   margin-top: -1px;
   padding: 0;
-  text-align: center;
   width: 200px;
+}
+
+.tile:hover {
+  opacity: 0.8;
 }
 
 .board-row:after {
@@ -19,3 +21,6 @@
   display: table;
 }
 
+.container {
+  transition: opacity 1s;
+}
