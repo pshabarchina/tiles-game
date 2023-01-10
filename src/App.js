@@ -35,7 +35,6 @@ function App() {
   }
 
   function openTile(e){
-    console.log(e.target.id); 
     if (openedTiles.includes(e.target.id)) return;
     if (firstTileId && secondTileId) return;
 
