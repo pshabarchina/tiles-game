@@ -49,9 +49,13 @@ function App() {
       setOpenedTiles([...openedTiles, e.target.id]);
       setSecondTileUrl(e.target.closest('span').id);
 
-      setTimeout(checkTilesMatch, 1000, firstTileUrl, e.target.closest('span').id, firstTileId, e.target.id);
-
-      setTimeout(resetTiles, 1001);
+      if (firstTileUrl !== e.target.closest('span').id){
+        setTimeout(closeNotGuessedTiles, 1000, firstTileId, e.target.id)
+        setTimeout(resetTiles, 1001);
+      }
+      else {
+        resetTiles();
+      }
     }
   } 
 
@@ -59,11 +63,9 @@ function App() {
     return (<span key={nanoid()}><Tile openedTiles={openedTiles} displayedShuffledPictures={displayedShuffledPictures} openTile={openTile} id={i}></Tile></span>)
   }
 
-  function checkTilesMatch(firstTileUrl, secondTileUrl, firstTileId, secondTileId) {
-    if (firstTileUrl !== secondTileUrl) {
-      const newOpenedTiles = openedTiles.filter(el => (el !== firstTileId && el !== secondTileId))
-      setOpenedTiles(newOpenedTiles);
-    }
+  function closeNotGuessedTiles(firstTileId, secondTileId) {
+    const newOpenedTiles = openedTiles.filter(el => (el !== firstTileId && el !== secondTileId))
+    setOpenedTiles(newOpenedTiles);
   }
 
   function resetTiles() {
