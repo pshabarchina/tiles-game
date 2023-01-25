@@ -1,22 +1,28 @@
 import './App.css';
 import Tile from "./components/Tile";
+import trio from "./trio.jpg";
+import striped from "./striped.jpg";
+import orange from "./orange.jpg";
+import band from "./band.jpg";
+import bow from "./bow.jpg";
+import tie from "./tie.jpg";
 import { nanoid } from 'nanoid';
 import { useState } from 'react';
 
 function App() {
   const pictures = [
-    {url: 'https://cdn2.thecatapi.com/images/b39.jpg', isOpened: false, id: '0'},
-    {url: 'https://cdn2.thecatapi.com/images/JFPROfGtQ.jpg', isOpened: false, id: '1'},
-    {url: 'https://cdn2.thecatapi.com/images/MTU1Njg0MQ.jpg', isOpened: false, id: '2'},
-    {url: 'https://cdn2.thecatapi.com/images/e9e.jpg', isOpened: false, id: '3'},
-    {url: 'https://cdn2.thecatapi.com/images/bai.jpg', isOpened: false, id: '4'},
-    {url: 'https://cdn2.thecatapi.com/images/12l.jpg', isOpened: false, id: '5'},
-    {url: "https://cdn2.thecatapi.com/images/b39.jpg", isOpened: false, id: '6'},
-    {url: "https://cdn2.thecatapi.com/images/JFPROfGtQ.jpg", isOpened: false, id: '7'},
-    {url: 'https://cdn2.thecatapi.com/images/MTU1Njg0MQ.jpg', isOpened: false, id: '8'},
-    {url: 'https://cdn2.thecatapi.com/images/e9e.jpg', isOpened: false, id: '9'},
-    {url: 'https://cdn2.thecatapi.com/images/bai.jpg', isOpened: false, id: '10'},
-    {url: 'https://cdn2.thecatapi.com/images/12l.jpg', isOpened: false, id: '11'},
+    {url: `${trio}`, isOpened: false, id: '0'},
+    {url: `${striped}`, isOpened: false, id: '1'},
+    {url: `${orange}`, isOpened: false, id: '2'},
+    {url: `${band}`, isOpened: false, id: '3'},
+    {url: `${bow}`, isOpened: false, id: '4'},
+    {url: `${tie}`, isOpened: false, id: '5'},
+    {url: `${trio}`, isOpened: false, id: '6'},
+    {url: `${striped}`, isOpened: false, id: '7'},
+    {url: `${orange}`, isOpened: false, id: '8'},
+    {url: `${band}`, isOpened: false, id: '9'},
+    {url: `${bow}`, isOpened: false, id: '10'},
+    {url: `${tie}`, isOpened: false, id: '11'},
   ];
 
   const [displayedShuffledPictures, setDisplayedShuffledPictures] = useState(shuffle(pictures));
